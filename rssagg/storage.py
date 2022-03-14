@@ -17,6 +17,9 @@ class FeedStorage:
     def item_ids(self) -> Iterable[str]:
         return os.listdir(self._feed_dir)
 
+    def items(self) -> Iterable[RSSItem]:
+        return map(self.load, self.item_ids())
+
     def load(self, item_id: str) -> RSSItem:
         with open(self._path_for(item_id)) as f:
             return RSSItem(**json.load(f))
